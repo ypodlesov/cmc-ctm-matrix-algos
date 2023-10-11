@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS "-pedantic")
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(benchmark)
 
 # find_package(benchmark CONFIG REQUIRED)
 # include_directories(${benchmark_INCLUDE_DIRS})

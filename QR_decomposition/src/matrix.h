@@ -37,6 +37,7 @@ public:
     static double ColumnNorm2(const TMatrix& a, size_t colNum);
     static TMatrix Prod(const TMatrix& a, const TMatrix& b);
     static TMatrix CreateIdentityMatrix(const size_t n);
+    static TMatrix CreateRandom(const size_t size1, const size_t size2);
 
 
     ~TMatrix();

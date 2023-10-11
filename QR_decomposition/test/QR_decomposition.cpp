@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <ctime>
 #include <gtest/gtest.h>
 #include <math.h>
 #include <QR_decomposition.h>
@@ -15,12 +13,7 @@ public:
 
     virtual void SetUp() override {
         std::srand(std::time(nullptr));
-        A = TMatrix<double>(N, N);
-        for (size_t i = 0; i < N; ++i) {
-            for (size_t j = 0; j < N; ++j) {
-                A(i, j) = std::rand() % N;
-            }
-        }
+        A = TMatrix<double>::CreateRandom(N, N);
         B = A;
     } 
 

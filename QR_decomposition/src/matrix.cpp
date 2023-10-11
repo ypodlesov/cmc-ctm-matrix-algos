@@ -1,8 +1,10 @@
 #include "matrix.h"
 #include "common.h"
 
-#include <utility>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <utility>
 
 template <typename T>
 TMatrix<T>::TMatrix(size_t size1, size_t size2)
@@ -239,6 +241,18 @@ TMatrix<T> TMatrix<T>::CreateIdentityMatrix(const size_t n) {
         I(i, i) = 1;
     }
     return I;
+}
+
+template <typename T>
+TMatrix<T> TMatrix<T>::CreateRandom(const size_t size1, const size_t size2) {
+    std::srand(std::time(nullptr));
+    TMatrix<double> res(size1, size2);
+    for (size_t i = 0; i < size1; ++i) {
+        for (size_t j = 0; j < size2; ++j) {
+            res(i, j) = std::rand() % (size1 * size2);
+        }
+    }
+    return res;
 }
 
 template <typename T>
