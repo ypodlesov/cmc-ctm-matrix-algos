@@ -36,7 +36,7 @@ protected:
         double delta = 0.0;
         for (size_t i = 0; i < A.size1(); ++i) {
             for (size_t j = 0; j < A.size2(); ++j) {
-                delta += abs(A(i, j) - B(i, j));
+                delta += fabs(A(i, j) - B(i, j));
             }
         }
         return delta;
