@@ -13,6 +13,6 @@ static void BM_QRDecomposition(benchmark::State& state) {
   }
 }
 
-BENCHMARK(BM_QRDecomposition)->Arg(1 << 8)->Arg(1 << 9)->Arg(1 << 10)->Arg(1 << 11)->Arg(1 << 12);
+BENCHMARK(BM_QRDecomposition)->Arg(1 << 6)->Arg(1 << 7)->Arg(1 << 8)->Arg(1 << 9)->Arg(1 << 10)->Arg(1 << 11)->Arg(1 << 12);
 
 BENCHMARK_MAIN();

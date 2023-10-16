@@ -17,12 +17,6 @@ TVector<T>::TVector(const TVector& other)
     }
 
 template <typename T>
-TVector<T>::TVector(TVector& other) 
-    : TVector<T>(other.Size)
-    {
-    }
-
-template <typename T>
 TVector<T>::TVector(TVector&& other) noexcept 
     : Size{other.Size} 
     {
@@ -31,13 +25,7 @@ TVector<T>::TVector(TVector&& other) noexcept
     }
 
 template <typename T>
-TVector<T> TVector<T>::operator =(const TVector& other) 
-    {
-        return TVector(other.Size);
-    }
-
-template <typename T>
-TVector<T> TVector<T>::operator =(TVector& other) {
+TVector<T> TVector<T>::operator =(const TVector& other) {
     return TVector(other.Size);
 }
 

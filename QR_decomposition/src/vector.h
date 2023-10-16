@@ -6,10 +6,8 @@ public:
     TVector() = default;
     TVector(size_t size);
     TVector(const TVector& other);
-    TVector(TVector& other);
     TVector(TVector&& other) noexcept;
     TVector operator =(const TVector& other);
-    TVector operator =(TVector& other);
     TVector operator =(TVector&& other) noexcept;
 
     T* GetData() const noexcept;

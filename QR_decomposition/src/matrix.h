@@ -13,10 +13,8 @@ public:
     TMatrix(size_t size1, size_t size2);
     TMatrix(size_t size);
     TMatrix(const TMatrix& other);
-    TMatrix(TMatrix& other);
     TMatrix(TMatrix&& other) noexcept;
     TMatrix operator =(const TMatrix& other);
-    TMatrix operator =(TMatrix& other);
     TMatrix operator =(TMatrix&& other) noexcept;
 
     T* GetData() const noexcept;
@@ -38,6 +36,7 @@ public:
     static TMatrix Prod(const TMatrix& a, const TMatrix& b);
     static TMatrix CreateIdentityMatrix(const size_t n);
     static TMatrix CreateRandom(const size_t size1, const size_t size2);
+    static T InnerProd(const TMatrix& a, size_t a_column, const TMatrix& b, size_t b_column);
 
 
     ~TMatrix();

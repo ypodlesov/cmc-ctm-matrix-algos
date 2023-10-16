@@ -32,17 +32,6 @@ TMatrix<T>::TMatrix(const TMatrix& other)
     }
 
 template <typename T>
-TMatrix<T>::TMatrix(TMatrix& other) 
-    : TMatrix<T>(other.Size1, other.Size2)
-    {
-        for (size_t i = 0; i < Size1; ++i) {
-            for (size_t j = 0; j < Size2; ++j) {
-                Data[i * Size2 + j] = other.Data[i * Size2 + j];
-            }
-        }
-    }
-
-template <typename T>
 TMatrix<T>::TMatrix(TMatrix&& other) noexcept 
     : Size1{other.GetSize1()}
     , Size2{other.GetSize2()}
@@ -53,19 +42,6 @@ TMatrix<T>::TMatrix(TMatrix&& other) noexcept
 
 template <typename T>
 TMatrix<T> TMatrix<T>::operator =(const TMatrix& other) {
-    Size1 = other.Size1;
-    Size2 = other.Size2;
-    Data = new T[Size1 * Size2];
-    for (size_t i = 0; i < Size1; ++i) {
-        for (size_t j = 0; j < Size2; ++j) {
-            Data[i * Size2 + j] = other.Data[i * Size2 + j];
-        }
-    }
-    return *this;
-}
-
-template <typename T>
-TMatrix<T> TMatrix<T>::operator =(TMatrix& other) {
     Size1 = other.Size1;
     Size2 = other.Size2;
     Data = new T[Size1 * Size2];
@@ -253,6 +229,21 @@ TMatrix<T> TMatrix<T>::CreateRandom(const size_t size1, const size_t size2) {
         }
     }
     return res;
+}
+
+template <typename T>
+T TMatrix<T>::InnerProd(const TMatrix<T>& a, size_t a_column, const TMatrix<T>& b, size_t b_column) {
+    if (!a || !b) {
+        throw(std::invalid_argument("Matrix has no Data."));
+    }
+    if (a.GetSize1() != b.GetSize1()) {
+        throw(std::invalid_argument("Inappropriate matrix sizes."));
+    }
+    T result{};
+    for (size_t i = 0; i < a.GetSize1(); ++i) {
+        result += a(i, a_column) * b(i, b_column);
+    }
+    return result;
 }
 
 template <typename T>

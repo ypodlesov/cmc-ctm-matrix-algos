@@ -19,9 +19,7 @@ bool QRDecomposition(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R)
             Q(i, k) = A(i, k) / norm;
         }
         for (size_t j = k + 1; j < n; ++j) {
-            for (size_t i = 0; i < m; ++i) {
-                R(k, j) += Q(i, k) * A(i, j); 
-            }
+            R(k, j) += TMatrix<double>::InnerProd(Q, k, A, j);
             for (size_t i = 0; i < m; ++i) {
                 A(i, j) -= Q(i, k) * R(k, j);
             }
