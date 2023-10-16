@@ -4,7 +4,6 @@ project(QR_decomposition_benchmark CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS "-pedantic")
-set(BENCHMARK_OUT_FORMAT csv)
 
 enable_testing()
 
