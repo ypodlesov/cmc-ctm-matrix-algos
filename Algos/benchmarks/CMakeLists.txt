@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(QR_decomposition_benchmark CXX)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_BUILD_TYPE Release)
+project(benchmarks CXX)
 set(CMAKE_CXX_FLAGS "-pedantic")
 
 enable_testing()
@@ -13,8 +11,9 @@ find_package(benchmark CONFIG REQUIRED)
 include_directories(${benchmark_INCLUDE_DIRS})
 
 add_executable(
-    ${PROJECT_NAME} 
-    QR_decomposition.cpp
+    ${PROJECT_NAME}
+    # QR_decomposition.cpp
+    multiply.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} benchmark::benchmark_main)

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(QR_decomposition_test CXX)
-set(CMAKE_BUILD_TYPE Release)
+project(tests CXX)
+# set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS "-pedantic")
 
 enable_testing()

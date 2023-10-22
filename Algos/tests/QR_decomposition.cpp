@@ -33,7 +33,7 @@ TEST_P(TQRTestBase, QRDecompositionTest) {
     ASSERT_EQ(TMatrix<double>::Prod(Q, Q.Transpose()), TMatrix<double>::CreateIdentityMatrix(N));
 }
 
-INSTANTIATE_TEST_SUITE_P(TQRTestInstance, TQRTestBase, testing::Values(3, 64, 128, 256));
+INSTANTIATE_TEST_SUITE_P(TQRTestInstance, TQRTestBase, testing::Values(4, 64, 128, 256));
 
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
