@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <math.h>
-#include <QR_decomposition.h>
+#include <qr_decomposition.h>
 #include <common.h>
 #include <iostream>
 
@@ -33,9 +33,4 @@ TEST_P(TQRTestBase, QRDecompositionTest) {
     ASSERT_EQ(TMatrix<double>::Prod(Q, Q.Transpose()), TMatrix<double>::CreateIdentityMatrix(N));
 }
 
-INSTANTIATE_TEST_SUITE_P(TQRTestInstance, TQRTestBase, testing::Values(4, 64, 128, 256));
-
-int main(int argc, char** argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+INSTANTIATE_TEST_SUITE_P(TQRTest, TQRTestBase, testing::Values(4, 64, 128, 256));

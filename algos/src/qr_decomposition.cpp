@@ -1,4 +1,4 @@
-#include "QR_decomposition.h"
+#include "qr_decomposition.h"
 
 #include "common.h"
 

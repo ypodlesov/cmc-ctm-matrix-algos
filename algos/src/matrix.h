@@ -39,7 +39,9 @@ public:
     static double Norm2(const TMatrix& a);
     static double ColumnNorm2(const TMatrix& a, size_t colNum);
     static bool AbleToMultiply(const TMatrix& a, const TMatrix& b);
+    static TMatrix<TMatrix> MakeBlockMatrix(const TMatrix& a, const std::pair<size_t, size_t>& blockSize);
     static TMatrix Prod(const TMatrix& a, const TMatrix& b);
+    static TMatrix ParallelProd(const TMatrix& a, const TMatrix& b);
     static TMatrix BlockProd(const TMatrix& a, const TMatrix& b, const std::tuple<size_t, size_t, size_t>& blockSizes);
     static TMatrix CreateIdentityMatrix(const size_t n);
     static TMatrix CreateRandom(const size_t size1, const size_t size2);

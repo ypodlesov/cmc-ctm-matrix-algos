@@ -10,5 +10,5 @@ target_sources(${QR_LIBRARY}
     PUBLIC
         matrix.cpp
         vector.cpp
-        QR_decomposition.cpp
+        qr_decomposition.cpp
 )
