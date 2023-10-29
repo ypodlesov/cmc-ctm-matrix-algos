@@ -1,3 +1,5 @@
+#pragma once
+
 class TMultiplyTestBase : public testing::TestWithParam<size_t> {
 public:
     TMultiplyTestBase() 
