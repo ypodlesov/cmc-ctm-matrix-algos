@@ -1,5 +1,6 @@
-#include "vector.h"
 #include "common.h"
+#include "matrix.h"
+#include "vector.h"
 
 #include <cmath>
 
@@ -22,6 +23,15 @@ TVector<T>::TVector(TVector&& other) noexcept
     {
         Data = other.Data;
         other.Data = nullptr;
+    }
+
+template <typename T>
+TVector<T>::TVector(const TMatrix<T>& a, size_t j) 
+    : TVector(a.GetSize1()) 
+    {
+        for (size_t i = 0; i < Size; ++i) {
+            Data[i] = a(i, j);
+        }
     }
 
 template <typename T>
@@ -116,6 +126,15 @@ double TVector<T>::Norm2(const TVector<T>& v) {
 }
 
 template <typename T>
+double TVector<T>::InnerProd(const TVector<T>& v, const TVector<T>& u) {
+    double res = 0.0;
+    for (size_t i = 0; i < v.GetSize(); ++i) {
+        res += v(i) * u(i);
+    }
+    return res;
+}
+
+template <typename T>
 std::ostream& operator <<(std::ostream& out, const TVector<T>& v) {
     if (!v) {
         throw(std::invalid_argument("Vector has no Data."));
@@ -204,3 +223,4 @@ T InnerProd(const TVector<T>& a, const TVector<T>& b) {
 }
 
 template class TVector<double>;
+// template class TVector<TMatrix<double>>;

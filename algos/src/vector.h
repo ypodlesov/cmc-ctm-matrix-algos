@@ -1,12 +1,16 @@
 #include <iostream>
 
 template <typename T>
+class TMatrix;
+
+template <typename T>
 class TVector {
 public:
     TVector() = default;
     TVector(size_t size);
     TVector(const TVector& other);
     TVector(TVector&& other) noexcept;
+    TVector(const TMatrix<T>& a, size_t j);
     TVector operator =(const TVector& other);
     TVector operator =(TVector&& other) noexcept;
 
@@ -21,6 +25,7 @@ public:
     TVector& operator *=(const DType coeff);
 
     static double Norm2(const TVector& v);
+    static double InnerProd(const TVector& v, const TVector& u);
 
     ~TVector();
 

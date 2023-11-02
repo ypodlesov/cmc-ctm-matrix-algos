@@ -1,13 +1,14 @@
-#include "matrix.h"
 #include "common.h"
+#include "matrix.h"
+#include "vector.h"
 
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
-#include <utility>
-#include <tuple>
-#include <thread>
 #include <future>
+#include <thread>
+#include <tuple>
+#include <utility>
 #include <vector>
 
 template <typename T>
@@ -157,7 +158,7 @@ void TMatrix<T>::Nullify() {
 }
 
 template <typename T>
-TMatrix<T> TMatrix<T>::Transpose() {
+TMatrix<T> TMatrix<T>::Transpose() const {
     TMatrix<T> res(Size2, Size1);
     for (size_t i = 0; i < Size1; ++i) {
         for (size_t j = 0; j < Size2; ++j) {
@@ -196,6 +197,13 @@ void TMatrix<T>::AssignBlock(TMatrix<T>& matrixBlock, size_t row1, size_t row2, 
         }
     }
 }
+
+// template <typename T>
+// void TMatrix<T>::AssignColumn(size_t columnIdx, const TVector<T>& v) {
+//     for (size_t i = 0; i < Size1; ++i) {
+//         Data[i * Size2 + columnIdx] = v(i);
+//     }
+// }
 
 template <typename T>
 bool TMatrix<T>::IsTriangular(const TMatrix<T>& a, ETriangularType type) {
@@ -538,3 +546,4 @@ template TMatrix<TMatrix<double>> operator *(const TMatrix<TMatrix<double>>& a, 
 
 template class TMatrix<double>;
 template class TMatrix<TMatrix<double>>;
+// template class TVector<TMatrix<double>>;
