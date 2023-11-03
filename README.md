@@ -1,6 +1,6 @@
 # Basic matrix algorithms
 
-This repository is devoted to study course of computational linear algebra in  **MSU-CMC-CMC** (Moscow State University, Faculty of Computational Mathematics and Cybernetics, Department of Computational Technologies and Modeling).
+This repository is devoted to study course of computational linear algebra in  **MSU-CMC-CTM** (Moscow State University, Faculty of Computational Mathematics and Cybernetics, Department of Computational Technologies and Modeling).
 
 Here you can also find use-examples of some instruments like **conan package manager**, **google-test**, **google-benchmark** and maybe something else.
 
