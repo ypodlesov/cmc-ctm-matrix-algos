@@ -34,3 +34,13 @@ TEST_P(TQRTestBase, QRDecompositionTest) {
 }
 
 INSTANTIATE_TEST_SUITE_P(TQRTest, TQRTestBase, testing::Values(4, 64, 128, 256));
+
+TEST_P(TQRTestBase, QRDecompositionBlockOptimizedTest) {
+    ASSERT_TRUE(QRDecompositionBlockOptimized(B, Q, R));
+    TMatrix C(TMatrix<double>::Prod(Q, R));
+    ASSERT_EQ(A, C);
+    ASSERT_TRUE(TMatrix<double>::IsTriangular(R, ETriangularType::Upper));
+    ASSERT_EQ(TMatrix<double>::Prod(Q, Q.Transpose()), TMatrix<double>::CreateIdentityMatrix(N));
+}
+
+INSTANTIATE_TEST_SUITE_P(TQRBlockOptimizedTest, TQRTestBase, testing::Values(4, 64, 128, 256));

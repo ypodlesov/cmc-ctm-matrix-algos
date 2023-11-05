@@ -12,8 +12,8 @@ include_directories(${benchmark_INCLUDE_DIRS})
 
 add_executable(
     ${PROJECT_NAME}
-    # QR_decomposition.cpp
-    multiply.cpp
+    qr_decomposition.cpp
+    # multiply.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} benchmark::benchmark_main)

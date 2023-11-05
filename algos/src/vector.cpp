@@ -27,8 +27,9 @@ TVector<T>::TVector(TVector&& other) noexcept
 
 template <typename T>
 TVector<T>::TVector(const TMatrix<T>& a, size_t j) 
-    : TVector(a.GetSize1()) 
+    : Size{a.GetSize1()}
     {
+        Data = new T[Size];
         for (size_t i = 0; i < Size; ++i) {
             Data[i] = a(i, j);
         }
@@ -135,6 +136,13 @@ double TVector<T>::InnerProd(const TVector<T>& v, const TVector<T>& u) {
 }
 
 template <typename T>
+TVector<T>::~TVector() {
+    delete [] Data;
+    Size = 0;
+}
+
+
+template <typename T>
 std::ostream& operator <<(std::ostream& out, const TVector<T>& v) {
     if (!v) {
         throw(std::invalid_argument("Vector has no Data."));
@@ -222,5 +230,12 @@ T InnerProd(const TVector<T>& a, const TVector<T>& b) {
     }
 }
 
+
+template <> 
+double TVector<TMatrix<double>>::Norm2(const TVector<TMatrix<double>>& v) = delete;
+
+template <>
+double TVector<TMatrix<double>>::InnerProd(const TVector<TMatrix<double>>& v, const TVector<TMatrix<double>>& u) = delete;
+
 template class TVector<double>;
-// template class TVector<TMatrix<double>>;
+template class TVector<TMatrix<double>>;

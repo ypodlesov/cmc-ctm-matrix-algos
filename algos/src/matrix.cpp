@@ -198,12 +198,12 @@ void TMatrix<T>::AssignBlock(TMatrix<T>& matrixBlock, size_t row1, size_t row2, 
     }
 }
 
-// template <typename T>
-// void TMatrix<T>::AssignColumn(size_t columnIdx, const TVector<T>& v) {
-//     for (size_t i = 0; i < Size1; ++i) {
-//         Data[i * Size2 + columnIdx] = v(i);
-//     }
-// }
+template <typename T>
+void TMatrix<T>::AssignColumn(size_t columnIdx, const TVector<T>& v) {
+    for (size_t i = 0; i < Size1; ++i) {
+        Data[i * Size2 + columnIdx] = v(i);
+    }
+}
 
 template <typename T>
 bool TMatrix<T>::IsTriangular(const TMatrix<T>& a, ETriangularType type) {
@@ -546,4 +546,3 @@ template TMatrix<TMatrix<double>> operator *(const TMatrix<TMatrix<double>>& a, 
 
 template class TMatrix<double>;
 template class TMatrix<TMatrix<double>>;
-// template class TVector<TMatrix<double>>;

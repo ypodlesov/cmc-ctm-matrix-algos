@@ -36,7 +36,7 @@ public:
     TMatrix Transpose() const;
     TMatrix CreateFromRange(size_t row1, size_t row2, size_t col1, size_t col2) const; // [row1,row2), [col1, col2)
     void AssignBlock(TMatrix& matrixBlock, size_t row1, size_t row2, size_t col1, size_t col2); // [row1,row2), [col1, col2)
-    // void AssignColumn(size_t columnIdx, const TVector<T>& v);
+    void AssignColumn(size_t columnIdx, const TVector<T>& v);
 
     static bool IsTriangular(const TMatrix& a, ETriangularType type);
     static double Norm2(const TMatrix& a);

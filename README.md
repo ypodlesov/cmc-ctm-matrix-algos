@@ -5,6 +5,9 @@ This repository is devoted to study course of computational linear algebra in  *
 Here you can also find use-examples of some instruments like **conan package manager**, **google-test**, **google-benchmark** and maybe something else.
 
 ## Project file tree
+
+`git ls-tree -r --name-only HEAD | tree --fromfile`
+
 ```bash
 cmc-ctm-matrix-algos
 ├── algos
@@ -14,7 +17,8 @@ cmc-ctm-matrix-algos
 │   │   ├── multiply.cpp
 │   │   ├── multiply.csv
 │   │   ├── parallel_multiply.csv
-│   │   └── qr_decomposition.cpp
+│   │   ├── qr_decomposition.cpp
+│   │   └── qr_decomposition.csv
 │   ├── CMakeLists.txt
 │   ├── conanfile.txt
 │   ├── graphics.ipynb
@@ -34,15 +38,24 @@ cmc-ctm-matrix-algos
 │       ├── multiply_block.cpp
 │       ├── multiply_parallel.cpp
 │       └── qr_decomposition.cpp
+├── fortran_examples
+│   ├── CMakeLists.txt
+│   ├── README.md
+│   └── src
+│       ├── lu.f90
+│       ├── main
+│       ├── main.f90
+│       └── matrix.f90
 ├── .gitignore
-└── QR_decomposition_using_boost
-    ├── CMakeLists.txt
-    ├── conanfile.txt
-    └── src
-        ├── common.h
-        ├── QR.cpp
-        ├── QR.h
-        └── QR_test.cpp
+├── QR_decomposition_using_boost
+│   ├── CMakeLists.txt
+│   ├── conanfile.txt
+│   └── src
+│       ├── common.h
+│       ├── QR.cpp
+│       ├── QR.h
+│       └── QR_test.cpp
+└── README.md
 ```
 
 ## Structure of main project content components 
@@ -52,3 +65,4 @@ cmc-ctm-matrix-algos
     * `tests` - testing the correctness of algorithm
     * `src` - implementation off all algorithms
 2. `QR_decomposition_using_boost` - implementation of **QR decomposition** algorithm using `boost::ublas`.
+3. `fortran_examples` - some matrix algorithms implemented in fortran

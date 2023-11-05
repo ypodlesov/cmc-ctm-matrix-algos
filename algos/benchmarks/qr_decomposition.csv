@@ -1,0 +1,13 @@
+name,iterations,real_time,cpu_time,time_unit,bytes_per_second,items_per_second,label,error_occurred,error_message
+"BM_QRDecomposition/64",47,6.73313e+07,6.73321e+07,ns,,,,,
+"BM_QRDecomposition/128",10,1.16334e+08,1.16328e+08,ns,,,,,
+"BM_QRDecomposition/256",3,3.10766e+08,3.10763e+08,ns,,,,,
+"BM_QRDecomposition/512",1,2.24122e+09,2.24112e+09,ns,,,,,
+"BM_QRDecomposition/1024",1,1.97543e+10,1.97538e+10,ns,,,,,
+"BM_QRDecomposition/2048",1,2.63459e+11,2.63454e+11,ns,,,,,
+"BM_QRDecompositionBlockOptimized/64",44,6.91611e+07,6.9162e+07,ns,,,,,
+"BM_QRDecompositionBlockOptimized/128",10,1.2941e+08,1.29409e+08,ns,,,,,
+"BM_QRDecompositionBlockOptimized/256",3,4.0352e+08,4.03512e+08,ns,,,,,
+"BM_QRDecompositionBlockOptimized/512",1,2.65296e+09,2.65289e+09,ns,,,,,
+"BM_QRDecompositionBlockOptimized/1024",1,2.07034e+10,2.0703e+10,ns,,,,,
+"BM_QRDecompositionBlockOptimized/2048",1,1.92266e+11,1.92262e+11,ns,,,,,
