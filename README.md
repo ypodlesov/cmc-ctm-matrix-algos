@@ -10,7 +10,7 @@ Here you can also find use-examples of some instruments like **conan package man
 
 ```bash
 cmc-ctm-matrix-algos
-├── algos
+├── cpp_examples
 │   ├── benchmarks
 │   │   ├── block_vs_parallel.csv
 │   │   ├── CMakeLists.txt
@@ -46,7 +46,8 @@ cmc-ctm-matrix-algos
 │       ├── main
 │       ├── main.f90
 │       └── matrix.f90
-├── .gitignore
+├── python_examples
+│   └── main.py
 ├── QR_decomposition_using_boost
 │   ├── CMakeLists.txt
 │   ├── conanfile.txt
@@ -60,9 +61,10 @@ cmc-ctm-matrix-algos
 
 ## Structure of main project content components 
 
-1. `algos`
+1. `cpp_examples` - C++ implemented QR-decomposition.
     * `benchmarks` - benchmarking of algorithms
     * `tests` - testing the correctness of algorithm
     * `src` - implementation off all algorithms
 2. `QR_decomposition_using_boost` - implementation of **QR decomposition** algorithm using `boost::ublas`.
 3. `fortran_examples` - some matrix algorithms implemented in fortran
+4. `python_examples` - some matrix algorithms implemented in python
