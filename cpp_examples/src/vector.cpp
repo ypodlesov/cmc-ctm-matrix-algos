@@ -65,23 +65,11 @@ bool TVector<T>::operator !() const noexcept {
 
 template <typename T>
 T& TVector<T>::operator ()(size_t i) const {
-    if (!Data) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (i > Size) {
-        throw(std::out_of_range("Cannot get vector element."));
-    }
     return Data[i];
 }
 
 template <typename T>
 TVector<T>& TVector<T>::operator +=(const TVector& other) {
-    if (!Data || !other.Data) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (Size != other.GetSize()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply +=."));
-    }
     for (size_t i = 0; i < Size; ++i) {
         Data[i] += other(i);
     }
@@ -90,12 +78,6 @@ TVector<T>& TVector<T>::operator +=(const TVector& other) {
 
 template <typename T>
 TVector<T>& TVector<T>::operator -=(const TVector& other) {
-    if (!Data || !other.Data) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (Size != other.GetSize()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply -=."));
-    }
     for (size_t i = 0; i < Size; ++i) {
         Data[i] -= other(i);
     }
@@ -104,9 +86,6 @@ TVector<T>& TVector<T>::operator -=(const TVector& other) {
 
 template <typename T> template <typename DType>
 TVector<T>& TVector<T>::operator *=(const DType coeff) {
-    if (!Data) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
     for (size_t i = 0; i < Size; ++i) {
         Data[i] *= coeff;
     }
@@ -115,9 +94,6 @@ TVector<T>& TVector<T>::operator *=(const DType coeff) {
 
 template <typename T>
 double TVector<T>::Norm2(const TVector<T>& v) {
-    if (!v) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
     double norm = 0;
     size_t size = v.GetSize();
     for (size_t i = 0; i < size; ++i) {
@@ -144,9 +120,6 @@ TVector<T>::~TVector() {
 
 template <typename T>
 std::ostream& operator <<(std::ostream& out, const TVector<T>& v) {
-    if (!v) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
     size_t size = v.GetSize();
     for (size_t i = 0; i < size; ++i) {
         out << v(i) << ' ';
@@ -156,12 +129,6 @@ std::ostream& operator <<(std::ostream& out, const TVector<T>& v) {
 
 template <typename T>
 bool operator ==(const TVector<T>& a, const TVector<T>& b) {
-    if (!a || !b) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (a.GetSize() != b.GetSize()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply +."));
-    }
     size_t size = a.GetSize();
     for (size_t i = 0; i < size; ++i) {
         if (!RoughEq(a(i), b(i))) {
@@ -173,56 +140,29 @@ bool operator ==(const TVector<T>& a, const TVector<T>& b) {
 
 template <typename T>
 bool operator !=(const TVector<T>& a, const TVector<T>& b) {
-    if (!a || !b) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (a.GetSize1() != b.GetSize2()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply +."));
-    }
     return !(a == b);
 }
 
 template <typename T>
 TVector<T> operator +(const TVector<T>& a, const TVector<T>& b) {
-    if (!a || !b) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (a.GetSize() != b.GetSize()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply +."));
-    }
-    TVector res(a);
+    TVector<T> res(a);
     return res += b;
 }
 
 template <typename T>
 TVector<T> operator -(const TVector<T>& a, const TVector<T>& b) {
-    if (!a || !b) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (a.GetSize() != b.GetSize()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply +."));
-    }
-    TVector res(a);
+    TVector<T> res(a);
     return res += b;
 }
 
 template <typename T1, typename T2>
 TVector<T1> operator *(const TVector<T1>& a, const T2 coeff) {
-    if (!a) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    TVector res(a);
+    TVector<T1> res(a);
     return res *= coeff;
 }
 
 template <typename T>
 T InnerProd(const TVector<T>& a, const TVector<T>& b) {
-    if (!a || !b) {
-        throw(std::invalid_argument("Vector has no Data."));
-    }
-    if (a.GetSize() != b.GetSize()) {
-        throw(std::invalid_argument("Vectors sizes are different. Cannot apply +."));
-    }
     T res{};
     size_t size = a.GetSize();
     for (size_t i = 0; i < size; ++i) {
