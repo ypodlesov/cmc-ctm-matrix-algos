@@ -39,8 +39,8 @@ public:
     void AssignColumn(size_t columnIdx, const TVector<T>& v);
 
     static bool IsTriangular(const TMatrix& a, ETriangularType type);
-    static double Norm2(const TMatrix& a);
-    static double ColumnNorm2(const TMatrix& a, size_t colNum);
+    static double Norm2(const TMatrix& a); // make member
+    static double ColumnNorm2(const TMatrix& a, size_t colNum); // make member
     static bool AbleToMultiply(const TMatrix& a, const TMatrix& b);
     static TMatrix<TMatrix> MakeBlockMatrix(const TMatrix& a, const std::pair<size_t, size_t>& blockSize);
     static TMatrix Prod(const TMatrix& a, const TMatrix& b);
