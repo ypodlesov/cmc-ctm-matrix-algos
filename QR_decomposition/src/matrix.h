@@ -34,15 +34,16 @@ public:
 
     void Nullify();
     TMatrix Transpose() const;
-    TMatrix CreateFromRange(size_t row1, size_t row2, size_t col1, size_t col2) const; // [row1,row2), [col1, col2)
+    TMatrix ConstructFromRange(size_t row1, size_t row2, size_t col1, size_t col2) const; // [row1,row2), [col1, col2)
     void AssignBlock(TMatrix& matrixBlock, size_t row1, size_t row2, size_t col1, size_t col2); // [row1,row2), [col1, col2)
     void AssignColumn(size_t columnIdx, const TVector<T>& v);
+    double ColumnNorm2(size_t colNum) const; // make member
+    double Norm2() const; // make member
+    TMatrix<TMatrix> ConstructBlockMatrix(const std::pair<size_t, size_t>& blockSize) const;
+    T* GetColumn(const size_t j) const;
 
     static bool IsTriangular(const TMatrix& a, ETriangularType type);
-    static double Norm2(const TMatrix& a); // make member
-    static double ColumnNorm2(const TMatrix& a, size_t colNum); // make member
     static bool AbleToMultiply(const TMatrix& a, const TMatrix& b);
-    static TMatrix<TMatrix> MakeBlockMatrix(const TMatrix& a, const std::pair<size_t, size_t>& blockSize);
     static TMatrix Prod(const TMatrix& a, const TMatrix& b);
     static TMatrix ParallelProd(const TMatrix& a, const TMatrix& b);
     static TMatrix BlockProd(const TMatrix& a, const TMatrix& b, const std::tuple<size_t, size_t, size_t>& blockSizes);
@@ -51,6 +52,10 @@ public:
     static T InnerProd(const TMatrix& a, size_t a_column, const TMatrix& b, size_t b_column);
     static TMatrix FromBlockMatrix(const TMatrix<TMatrix>& a);
 
+    friend bool QRDecomposition(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool QRDecompositionBlockOptimized(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
+
+    friend class TVector<T>;
 
     ~TMatrix();
     

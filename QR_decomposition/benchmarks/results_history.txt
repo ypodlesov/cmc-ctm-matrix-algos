@@ -1,0 +1,175 @@
+First implementation
+
+2023-12-24T13:09:42+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.00, 0.00, 0.00
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecomposition/64                   68101942 ns     68101508 ns           48
+BM_QRDecomposition/128                 114651216 ns    114644897 ns           10
+BM_QRDecomposition/256                 395546903 ns    395533639 ns            4
+BM_QRDecomposition/512                2207994863 ns   2207920586 ns            1
+BM_QRDecomposition/1024               1.9432e+10 ns   1.9431e+10 ns            1
+BM_QRDecomposition/2048               2.7077e+11 ns   2.7076e+11 ns            1
+BM_QRDecompositionBlockOptimized/64     69141585 ns     69141316 ns           44
+BM_QRDecompositionBlockOptimized/128   129470276 ns    129467811 ns           10
+BM_QRDecompositionBlockOptimized/256   402940675 ns    402930768 ns            3
+BM_QRDecompositionBlockOptimized/512  2585184577 ns   2585073216 ns            1
+BM_QRDecompositionBlockOptimized/1024 2.1074e+10 ns   2.1073e+10 ns            1
+BM_QRDecompositionBlockOptimized/2048 1.8674e+11 ns   1.8673e+11 ns            1
+
+
+
+From Tyrtysh
+2023-12-24T15:09:25+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.22, 0.17, 0.09
+------------------------------------------------------------------
+Benchmark                        Time             CPU   Iterations
+------------------------------------------------------------------
+BM_QRDecomposition/64     19786108 ns     19787480 ns          100
+BM_QRDecomposition/128    70196790 ns     70196846 ns           43
+BM_QRDecomposition/256   133224295 ns    133219637 ns           10
+BM_QRDecomposition/512   341825132 ns    341784533 ns            3
+BM_QRDecomposition/1024 1633597597 ns   1633526418 ns            1
+BM_QRDecomposition/2048 1.3239e+10 ns   1.3238e+10 ns            1
+BM_QRDecomposition/4096 1.1492e+11 ns   1.1491e+11 ns            1
+
+blockSize=2
+2023-12-24T16:03:01+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.37, 0.24, 0.09
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecompositionBlockOptimized/64     16022683 ns     16023120 ns          100
+BM_QRDecompositionBlockOptimized/128    69940162 ns     69941472 ns           49
+BM_QRDecompositionBlockOptimized/256   122017990 ns    122013144 ns           10
+BM_QRDecompositionBlockOptimized/512   333967698 ns    333958103 ns            3
+BM_QRDecompositionBlockOptimized/1024 1611658681 ns   1611568144 ns            1
+BM_QRDecompositionBlockOptimized/2048 1.3212e+10 ns   1.3211e+10 ns            1
+BM_QRDecompositionBlockOptimized/4096 1.1394e+11 ns   1.1393e+11 ns            1
+
+blockSize=16
+2023-12-24T16:05:35+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.33, 0.36, 0.17
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecompositionBlockOptimized/64     15528011 ns     15529111 ns          100
+BM_QRDecompositionBlockOptimized/128    69681619 ns     69682279 ns           55
+BM_QRDecompositionBlockOptimized/256   117001264 ns    116997732 ns           10
+BM_QRDecompositionBlockOptimized/512   338932045 ns    338922901 ns            3
+BM_QRDecompositionBlockOptimized/1024 1675686093 ns   1675644528 ns            1
+BM_QRDecompositionBlockOptimized/2048 1.3748e+10 ns   1.3748e+10 ns            1
+BM_QRDecompositionBlockOptimized/4096 1.1558e+11 ns   1.1557e+11 ns            1
+
+blockSize=32
+2023-12-24T16:07:14+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.61, 0.49, 0.24
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecompositionBlockOptimized/64     15222790 ns     15224116 ns          100
+BM_QRDecompositionBlockOptimized/128    68628343 ns     68629036 ns           55
+BM_QRDecompositionBlockOptimized/256   115938363 ns    115935341 ns           10
+BM_QRDecompositionBlockOptimized/512   336678406 ns    336671057 ns            3
+BM_QRDecompositionBlockOptimized/1024 1679089040 ns   1679025572 ns            1
+BM_QRDecompositionBlockOptimized/2048 1.3832e+10 ns   1.3832e+10 ns            1
+BM_QRDecompositionBlockOptimized/4096 1.1698e+11 ns   1.1698e+11 ns            1
+
+blockSize=16
+2023-12-24T16:40:12+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.06, 0.11, 0.20
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecompositionBlockOptimized/64     11009557 ns     11011026 ns          100
+BM_QRDecompositionBlockOptimized/128    68583973 ns     68585172 ns           82
+BM_QRDecompositionBlockOptimized/256    61426141 ns     61424983 ns           10
+BM_QRDecompositionBlockOptimized/512   342112550 ns    342103866 ns            6
+BM_QRDecompositionBlockOptimized/1024  896155247 ns    896132165 ns            1
+BM_QRDecompositionBlockOptimized/2048 7436017446 ns   7435723397 ns            1
+BM_QRDecompositionBlockOptimized/4096 7.2778e+10 ns   7.2775e+10 ns            1
+
+blockSize=32
+2023-12-24T16:41:34+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.38, 0.23, 0.24
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecompositionBlockOptimized/64      8158943 ns      8159749 ns          100
+BM_QRDecompositionBlockOptimized/128    69227869 ns     69229770 ns          107
+BM_QRDecompositionBlockOptimized/256    56074972 ns     56073303 ns           10
+BM_QRDecompositionBlockOptimized/512   343983115 ns    343971238 ns            6
+BM_QRDecompositionBlockOptimized/1024  936600263 ns    936548299 ns            1
+BM_QRDecompositionBlockOptimized/2048 8087297234 ns   8086986021 ns            1
+BM_QRDecompositionBlockOptimized/4096 7.0259e+10 ns   7.0256e+10 ns            1
+
+blockSize=32
+2023-12-24T16:44:54+00:00
+Running ./benchmarks/benchmarks
+Run on (32 X 1995.32 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x32)
+  L1 Instruction 32 KiB (x32)
+  L2 Unified 4096 KiB (x16)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.06, 0.22, 0.24
+--------------------------------------------------------------------------------
+Benchmark                                      Time             CPU   Iterations
+--------------------------------------------------------------------------------
+BM_QRDecompositionBlockOptimized/64      9397854 ns      9398924 ns          100
+BM_QRDecompositionBlockOptimized/128    68987197 ns     68988766 ns           97
+BM_QRDecompositionBlockOptimized/256    63930406 ns     63922122 ns           10
+BM_QRDecompositionBlockOptimized/512   363448122 ns    363435282 ns            6
+BM_QRDecompositionBlockOptimized/1024  957281208 ns    957207961 ns            1
+BM_QRDecompositionBlockOptimized/2048 8280631206 ns   8280261524 ns            1
+BM_QRDecompositionBlockOptimized/4096 7.1351e+10 ns   7.1348e+10 ns            1

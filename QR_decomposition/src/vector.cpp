@@ -31,7 +31,7 @@ TVector<T>::TVector(const TMatrix<T>& a, size_t j)
     {
         Data = new T[Size];
         for (size_t i = 0; i < Size; ++i) {
-            Data[i] = a(i, j);
+            Data[i] = a.Data[j * a.Size1 + i];
         }
     }
 

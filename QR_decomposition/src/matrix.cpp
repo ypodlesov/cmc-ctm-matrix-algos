@@ -29,17 +29,15 @@ template <typename T>
 TMatrix<T>::TMatrix(const TMatrix& other) 
     : TMatrix<T>(other.Size1, other.Size2)
     {
-        for (size_t i = 0; i < Size1; ++i) {
-            for (size_t j = 0; j < Size2; ++j) {
-                Data[i * Size2 + j] = other.Data[i * Size2 + j];
-            }
+        for (size_t i = 0; i < Size1 * Size2; ++i) {
+            Data[i] = other.Data[i];
         }
     }
 
 template <typename T>
 TMatrix<T>::TMatrix(TMatrix&& other) noexcept 
-    : Size1{other.GetSize1()}
-    , Size2{other.GetSize2()}
+    : Size1{other.Size1}
+    , Size2{other.Size2}
     {
         Data = other.Data;
         other.Data = nullptr;
@@ -50,10 +48,8 @@ TMatrix<T>& TMatrix<T>::operator =(const TMatrix& other) {
     Size1 = other.Size1;
     Size2 = other.Size2;
     Data = new T[Size1 * Size2];
-    for (size_t i = 0; i < Size1; ++i) {
-        for (size_t j = 0; j < Size2; ++j) {
-            Data[i * Size2 + j] = other.Data[i * Size2 + j];
-        }
+    for (size_t i = 0; i < Size1 * Size2; ++i) {
+        Data[i] = other.Data[i];
     }
     return *this;
 }
@@ -88,51 +84,43 @@ bool TMatrix<T>::operator !() const noexcept {
 }
 
 template <typename T>
-T& TMatrix<T>::operator ()(size_t row, size_t column) const {
-    return Data[row * Size2 + column];
+T& TMatrix<T>::operator ()(size_t i, size_t j) const {
+    return Data[j * Size1 + i];
 }
 
 template <typename T>
 TMatrix<T>& TMatrix<T>::operator +=(const TMatrix<T>& other) {
-    for (size_t i = 0; i < Size1; ++i) {
-        for (size_t j = 0; j < Size2; ++j) {
-            Data[i * Size2 + j] += other(i, j);
-        }
+    for (size_t i = 0; i < Size1 * Size2; ++i) {
+        Data[i] += other.Data[i];
     }
     return *this;
 }
 
 template <typename T>
 TMatrix<T>& TMatrix<T>::operator -=(const TMatrix<T>& other) {
-    for (size_t i = 0; i < Size1; ++i) {
-        for (size_t j = 0; j < Size2; ++j) {
-            Data[i * Size1 + j] -= other(i, j);
-        }
+    for (size_t i = 0; i < Size1 * Size2; ++i) {
+        Data[i] -= other.Data[i];
     }
     return *this;
 }
 
 template <typename T> template <typename DType>
 TMatrix<T>& TMatrix<T>::operator *=(const DType coeff) {
-    for (size_t i = 0; i < Size1; ++i) {
-        for (size_t j = 0; j < Size2; ++j) {
-            Data[i * Size1 + j] *= coeff;
-        }
+    for (size_t i = 0; i < Size1 * Size2; ++i) {
+        Data[i] *= coeff;
     }
     return *this;
 }
 
 template <typename T>
 TMatrix<T>::operator double() const {
-    return Norm2(*this);
+    return Norm2();
 }
 
 template <typename T>
 void TMatrix<T>::Nullify() {
-    for (size_t i = 0; i < Size1; ++i) {
-        for (size_t j = 0; j < Size2; ++j) {
-            Data[i * Size1 + j] = 0;
-        }
+    for (size_t i = 0; i < Size1 * Size2; ++i) {
+        Data[i] = 0;
     }
 }
 
@@ -141,22 +129,18 @@ TMatrix<T> TMatrix<T>::Transpose() const {
     TMatrix<T> res(Size2, Size1);
     for (size_t i = 0; i < Size1; ++i) {
         for (size_t j = 0; j < Size2; ++j) {
-            res.Data[j * Size1 + i] = Data[i * Size2 + j];
+            res.Data[i * Size2 + j] = Data[j * Size1 + i];
         }
     }
     return res;
 }
 
 template <typename T>
-TMatrix<T> TMatrix<T>::CreateFromRange(size_t row1, size_t row2, size_t col1, size_t col2) const { // [row1,row2), [col1, col2)
+TMatrix<T> TMatrix<T>::ConstructFromRange(size_t row1, size_t row2, size_t col1, size_t col2) const { // [row1,row2), [col1, col2)
     TMatrix<T> res(row2 - row1, col2 - col1);
     for (size_t i = row1; i < row2; ++i) {
         for (size_t j = col1; j < col2; ++j) {
-            try {
-                res(i - row1, j - col1) = Data[i * Size2 + j];
-            } catch(...) {
-                std::cout << "ERROR: " << i - row1 << ' ' << j - col1 << std::endl;
-            }
+            res(i - row1, j - col1) = Data[j * Size1 + i];
         }
     }
     return res;
@@ -166,15 +150,15 @@ template <typename T>
 void TMatrix<T>::AssignBlock(TMatrix<T>& matrixBlock, size_t row1, size_t row2, size_t col1, size_t col2) { // [row1,row2), [col1, col2)
     for (size_t i = row1; i < row2; ++i) {
         for (size_t j = col1; j < col2; ++j) {
-            Data[i * Size2 + j] = matrixBlock(i - row1, j - col1);
+            Data[j * Size1 + i] = matrixBlock(i - row1, j - col1);
         }
     }
 }
 
 template <typename T>
-void TMatrix<T>::AssignColumn(size_t columnIdx, const TVector<T>& v) {
+void TMatrix<T>::AssignColumn(size_t j, const TVector<T>& v) {
     for (size_t i = 0; i < Size1; ++i) {
-        Data[i * Size2 + columnIdx] = v(i);
+        Data[j * Size1 + i] = v(i);
     }
 }
 
@@ -191,48 +175,48 @@ bool TMatrix<T>::IsTriangular(const TMatrix<T>& a, ETriangularType type) {
 }
 
 template <typename T>
-double TMatrix<T>::Norm2(const TMatrix& a) {
+double TMatrix<T>::Norm2() const {
     double res = 0;
-    for (size_t i = 0; i < a.GetSize1(); ++i) {
-        for (size_t j = 0; j < a.GetSize2(); ++j) {
-            res += a(i, j);
+    for (size_t i = 0; i < Size1; ++i) {
+        for (size_t j = 0; j < Size2; ++j) {
+            res += Data[j * Size1 + i];
         }
     }
     return std::sqrt(res);
 }
 
 template <typename T>
-double TMatrix<T>::ColumnNorm2(const TMatrix& a, size_t colNum) {
+double TMatrix<T>::ColumnNorm2(size_t j) const {
     double norm = 0;
-    for (size_t i = 0; i < a.GetSize1(); ++i) {
-        norm += a(i, colNum) * a(i, colNum);
+    for (size_t i = Size1 * j; i < Size1 * (j + 1); ++i) {
+        norm += Data[i] * Data[i];
     }
     return std::sqrt(norm);
 }
 
 template <typename T>
-bool TMatrix<T>::AbleToMultiply(const TMatrix<T>& a, const TMatrix<T>& b) try {
-    return true;
-} catch(std::exception& e) {
-    std::cout << e.what() << std::endl;
-    return false;
+bool TMatrix<T>::AbleToMultiply(const TMatrix<T>& a, const TMatrix<T>& b) {
+    return a.GetSize2() == b.GetSize1();
 }
 
 template <typename T>
-TMatrix<TMatrix<T>> TMatrix<T>::MakeBlockMatrix(const TMatrix& a, const std::pair<size_t, size_t>& blockSize) {
-    size_t n = a.GetSize1();
-    size_t m = a.GetSize2();
+TMatrix<TMatrix<T>> TMatrix<T>::ConstructBlockMatrix(const std::pair<size_t, size_t>& blockSize) const {
     size_t blockSize1 = blockSize.first;
     size_t blockSize2 = blockSize.second;
-    size_t blockMatrixSize1 = (n +  blockSize1 - 1) / blockSize1;
-    size_t blockMatrixSize2 = (m +  blockSize2 - 1) / blockSize2;
+    size_t blockMatrixSize1 = (Size1 +  blockSize1 - 1) / blockSize1;
+    size_t blockMatrixSize2 = (Size2 +  blockSize2 - 1) / blockSize2;
     TMatrix<TMatrix<T>> blockMatrix(blockMatrixSize1, blockMatrixSize2);
-    for (size_t j = 0; j < m; j += blockSize2) {
-        for (size_t i = 0; i < n; i += blockSize1) {
-            blockMatrix(i / blockSize1, j / blockSize2) = a.CreateFromRange(i, std::min(i + blockSize1, n), j, std::min(j + blockSize2, m));
+    for (size_t j = 0; j < Size2; j += blockSize2) {
+        for (size_t i = 0; i < Size1; i += blockSize1) {
+            blockMatrix(i / blockSize1, j / blockSize2) = ConstructFromRange(i, std::min(i + blockSize1, Size1), j, std::min(j + blockSize2, Size2));
         }
     }
     return blockMatrix;
+}
+
+template <typename T>
+T* TMatrix<T>::GetColumn(const size_t j) const {
+    return &Data[j * Size1];
 }
 
 template <typename T>
@@ -268,8 +252,8 @@ TMatrix<T> TMatrix<T>::ParallelProd(const TMatrix& a, const TMatrix& b) {
     size_t bBlockMatrixSize1 = aBlockMatrixSize2 = (m +  blockSize2 - 1) / blockSize2;
     size_t bBlockMatrixSize2 = (l +  blockSize3 - 1) / blockSize3;
 
-    auto aBlockMatrix = MakeBlockMatrix(a, {blockSize1, blockSize2});
-    auto bBlockMatrix = MakeBlockMatrix(a, {blockSize2, blockSize3});
+    auto aBlockMatrix = a.ConstructBlockMatrix({blockSize1, blockSize2});
+    auto bBlockMatrix = a.ConstructBlockMatrix({blockSize2, blockSize3});
 
     TMatrix<TMatrix<T>> cBlockMatrix(aBlockMatrixSize1, bBlockMatrixSize2);
     for (size_t i = 0; i < aBlockMatrixSize1; ++i) {
@@ -308,8 +292,8 @@ TMatrix<T> TMatrix<T>::BlockProd(const TMatrix<T>& a, const TMatrix<T>& b, const
     size_t aBlockMatrixSize2;
     size_t bBlockMatrixSize1 = aBlockMatrixSize2 = (m +  blockSize2 - 1) / blockSize2;
     size_t bBlockMatrixSize2 = (l +  blockSize3 - 1) / blockSize3;
-    auto aBlockMatrix = MakeBlockMatrix(a, {blockSize1, blockSize2});
-    auto bBlockMatrix = MakeBlockMatrix(a, {blockSize2, blockSize3});
+    auto aBlockMatrix = a.ConstructBlockMatrix({blockSize1, blockSize2});
+    auto bBlockMatrix = a.ConstructBlockMatrix({blockSize2, blockSize3});
     
     TMatrix<TMatrix<T>> cBlockMatrix(aBlockMatrixSize1, bBlockMatrixSize2);
     for (size_t i = 0; i < aBlockMatrixSize1; ++i) {
@@ -351,8 +335,8 @@ TMatrix<T> TMatrix<T>::CreateRandom(const size_t size1, const size_t size2) {
 template <typename T>
 T TMatrix<T>::InnerProd(const TMatrix<T>& a, size_t a_column, const TMatrix<T>& b, size_t b_column) {
     T result{};
-    for (size_t i = 0; i < a.GetSize1(); ++i) {
-        result += a(i, a_column) * b(i, b_column);
+    for (size_t i = 0; i < a.Size1; ++i) {
+        result += a.Data[a_column * a.Size1 + i] * b.Data[b_column * b.Size1 + i];
     }
     return result;
 }
