@@ -13,7 +13,7 @@
 //     }
 // }
 
-// BENCHMARK(BM_QRDecomposition)/*->Arg(1 << 6)->Arg(1 << 7)->Arg(1 << 8)->Arg(1 << 9)->Arg(1 << 10)->Arg(1 << 11)*/->Arg(1 << 12);
+// BENCHMARK(BM_QRDecomposition)->Arg(1 << 6)->Arg(1 << 7)->Arg(1 << 8)->Arg(1 << 9)->Arg(1 << 10)->Arg(1 << 11)->Arg(1 << 12);
 
 static void BM_QRDecompositionBlockOptimized(benchmark::State& state) {
     for (auto _ : state) {
