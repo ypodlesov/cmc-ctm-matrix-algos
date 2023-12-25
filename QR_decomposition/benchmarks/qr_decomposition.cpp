@@ -15,18 +15,18 @@
 
 // BENCHMARK(BM_QRDecomposition)->Arg(1 << 6)->Arg(1 << 7)->Arg(1 << 8)->Arg(1 << 9)->Arg(1 << 10)->Arg(1 << 11)->Arg(1 << 12);
 
-static void BM_QRDecompositionBlockOptimized(benchmark::State& state) {
+static void BM_QRDecompositionClassicBlas(benchmark::State& state) {
     for (auto _ : state) {
         for (auto _ : state) {
             state.PauseTiming();
             auto A = TMatrix<double>::CreateRandom(state.range(0), state.range(0));
             TMatrix<double> Q, R;
             state.ResumeTiming();
-            QRDecompositionBlockOptimizedBlas(A, Q, R);
+            QRDecompositionClassicBlas(A, Q, R);
         }
     }
 }
 
-BENCHMARK(BM_QRDecompositionBlockOptimized)->Arg(1 << 6)->Arg(1 << 7)->Arg(1 << 8)->Arg(1 << 9)->Arg(1 << 10)->Arg(1 << 11)->Arg(1 << 12);
+BENCHMARK(BM_QRDecompositionClassicBlas)->Arg(1 << 11)->Arg(1 << 12);
 
 BENCHMARK_MAIN();

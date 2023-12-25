@@ -56,6 +56,7 @@ public:
     friend bool QRDecompositionBlas(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
     friend bool QRDecompositionBlockOptimized(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
     friend bool QRDecompositionBlockOptimizedBlas(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool QRDecompositionClassicBlas(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
 
     friend class TVector<T>;
 

@@ -1,6 +1,6 @@
-#include "common.h"
-#include "matrix.h"
-#include "vector.h"
+#include <common.h>
+#include <matrix.h>
+#include <vector.h>
 
 #include <cmath>
 #include <cstdlib>

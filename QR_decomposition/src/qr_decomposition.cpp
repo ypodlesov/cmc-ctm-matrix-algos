@@ -58,7 +58,7 @@ bool QRDecompositionBlockOptimized(TMatrix<double>& A, TMatrix<double>& Q, TMatr
     if (A.Size1 != A.Size2) {
         return false;
     }
-    const int blockSize = 8;
+    constexpr int blockSize = 8;
     const int n = A.Size1;
     Q = std::move(A);
     R = TMatrix<double>(n, n);
@@ -105,7 +105,7 @@ bool QRDecompositionBlockOptimizedBlas(TMatrix<double>& A, TMatrix<double>& Q, T
     if (A.Size1 != A.Size2) {
         return false;
     }
-    const int blockSize = 512;
+    const int blockSize = 8;
     const int n = A.Size1;
     const int increment = 1;
     const double alpha = 1;
@@ -121,7 +121,7 @@ bool QRDecompositionBlockOptimizedBlas(TMatrix<double>& A, TMatrix<double>& Q, T
         for (int i = 0; i < j; i += blockSize) {
             int actualBlockSize = std::min<int>(blockSize, j - i);
             double* ithQColumn = Q.GetColumn(i);
-            dgemv_(&trans, &n, &actualBlockSize, &alpha, ithQColumn, &n, jthQColumn, &increment, &beta, innerProdVector, &increment);
+            dgemv_(trans, n, actualBlockSize, alpha, ithQColumn, n, jthQColumn, increment, beta, innerProdVector, increment);
 
             for (int l = 0; l < actualBlockSize; ++l) {
                 jthRColumn[i + l] = innerProdVector[l];
@@ -135,5 +135,57 @@ bool QRDecompositionBlockOptimizedBlas(TMatrix<double>& A, TMatrix<double>& Q, T
         dscal_(&n, &coeff, jthQColumn, &increment);
     }
     delete[] innerProdVector;
+    return true;
+}
+
+namespace {
+
+    bool MiniQR(int m, int n, double* qBlock, double* rBlock, int startIdx) {
+        const int increment = 1;
+        for (int j = 0; j < n; ++j) {
+            const int jShift = j * m;
+            for (int i = 0; i < j; ++i) {
+                const int iShift = i * m;
+                double innerProd = ddot_(&m, &qBlock[iShift], &increment, &qBlock[jShift], &increment);
+                rBlock[jShift + startIdx + i] = innerProd;
+                innerProd *= -1;
+                daxpy_(&m, &innerProd, &qBlock[iShift], &increment, &qBlock[jShift], &increment);
+            }
+            double rjj = dnrm2_(&m, &qBlock[jShift], &increment);
+            rBlock[jShift + startIdx + j] = rjj;
+            const double coeff = 1 / rjj;
+            dscal_(&m, &coeff, &qBlock[jShift], &increment);
+        }
+        return true;
+    }
+
+}
+
+bool QRDecompositionClassicBlas(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R) {
+    if (A.Size1 != A.Size2) {
+        return false;
+    }
+    const int n = A.Size1;
+    constexpr int increment = 1;
+    constexpr double alpha = 1;
+    constexpr double beta = 0;
+    constexpr int blockSize = 64;
+    Q = std::move(A);
+    R = TMatrix<double>(n, n);
+    R.Nullify();
+    double tmp[blockSize * blockSize];
+    for (int j = 0; j < n; j += blockSize) {
+        const int actualBlockSize = std::min<int>(n - j, blockSize);
+        for (int i = 0; i < j; i += blockSize) {
+            dgemm_('t', 'n', blockSize, actualBlockSize, n, alpha, Q.GetColumn(i), n, Q.GetColumn(j), n, beta, tmp, blockSize);
+            for (int k = 0; k < actualBlockSize; ++k) {
+                for (int l = 0; l < blockSize; ++l) {
+                    R.GetColumn(j)[k * n + i + l] = tmp[k * blockSize + l];
+                }
+            }
+            dgemm_('n', 'n', n, actualBlockSize, blockSize, -alpha, Q.GetColumn(i), n, tmp, blockSize, alpha, Q.GetColumn(j), n);
+        }
+        MiniQR(n, actualBlockSize, Q.GetColumn(j), R.GetColumn(j), j);
+    }
     return true;
 }
