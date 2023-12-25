@@ -8,7 +8,7 @@
 //             auto A = TMatrix<double>::CreateRandom(state.range(0), state.range(0));
 //             TMatrix<double> Q, R;
 //             state.ResumeTiming();
-//             QRDecomposition(A, Q, R);
+//             QRDecompositionBlas(A, Q, R);
 //         }
 //     }
 // }
@@ -22,7 +22,7 @@ static void BM_QRDecompositionBlockOptimized(benchmark::State& state) {
             auto A = TMatrix<double>::CreateRandom(state.range(0), state.range(0));
             TMatrix<double> Q, R;
             state.ResumeTiming();
-            QRDecompositionBlockOptimized(A, Q, R);
+            QRDecompositionBlockOptimizedBlas(A, Q, R);
         }
     }
 }

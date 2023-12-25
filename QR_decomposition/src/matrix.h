@@ -53,7 +53,9 @@ public:
     static TMatrix FromBlockMatrix(const TMatrix<TMatrix>& a);
 
     friend bool QRDecomposition(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool QRDecompositionBlas(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
     friend bool QRDecompositionBlockOptimized(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool QRDecompositionBlockOptimizedBlas(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
 
     friend class TVector<T>;
 
