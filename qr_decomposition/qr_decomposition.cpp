@@ -1,14 +1,12 @@
 #include "qr_decomposition.h"
-
 #include "common.h"
 
-bool QRDecomposition(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R) {
-    if (A.Size1 != A.Size2) {
+bool QRDecomposition(TMatrix<double>& Q, TMatrix<double>& R) {
+    if (Q.Size1 != Q.Size2) {
         return false;
     }
-    const size_t n = A.Size1;
-    Q = std::move(A);
-    R = TMatrix<double>(A.Size2, A.Size2);
+    const size_t n = Q.Size1;
+    R = TMatrix<double>(Q.Size2, Q.Size2);
     R.Nullify();
     for (size_t j = 0; j < n; ++j) {
         for (size_t i = 0; i < j; ++i) {
@@ -27,13 +25,13 @@ bool QRDecomposition(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R)
     return true;
 }
 
-bool QRDecompositionBlockOptimized(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R) {
-    if (A.Size1 != A.Size2) {
+bool QRDecompositionBlockOptimized(TMatrix<double>& Q, TMatrix<double>& R) {
+    if (Q.Size1 != Q.Size2) {
         return false;
     }
     const size_t blockSize = 8;
-    const size_t n = A.Size1;
-    Q = std::move(A);
+    const size_t n = Q.Size1;
+    Q = std::move(Q);
     R = TMatrix<double>(n, n);
     R.Nullify();
     for (size_t j = 0; j < n; ++j) {

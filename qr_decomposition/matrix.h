@@ -52,8 +52,8 @@ public:
     static T InnerProd(const TMatrix& a, size_t a_column, const TMatrix& b, size_t b_column);
     static TMatrix FromBlockMatrix(const TMatrix<TMatrix>& a);
 
-    friend bool QRDecomposition(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
-    friend bool QRDecompositionBlockOptimized(TMatrix<double>& A, TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool QRDecomposition(TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool QRDecompositionBlockOptimized(TMatrix<double>& Q, TMatrix<double>& R);
 
     friend class TVector<T>;
 

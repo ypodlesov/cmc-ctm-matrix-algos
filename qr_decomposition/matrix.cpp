@@ -248,8 +248,7 @@ TMatrix<T> TMatrix<T>::ParallelProd(const TMatrix& a, const TMatrix& b) {
     size_t blockSize2 = std::max<size_t>(std::sqrt(m), 1 << 8);
     size_t blockSize3 = std::max<size_t>(std::sqrt(l), 1 << 8);
     size_t aBlockMatrixSize1 = (n +  blockSize1 - 1) / blockSize1;
-    size_t aBlockMatrixSize2;
-    size_t bBlockMatrixSize1 = aBlockMatrixSize2 = (m +  blockSize2 - 1) / blockSize2;
+    size_t aBlockMatrixSize2 = (m + blockSize2 - 1) / blockSize2;
     size_t bBlockMatrixSize2 = (l +  blockSize3 - 1) / blockSize3;
 
     auto aBlockMatrix = a.ConstructBlockMatrix({blockSize1, blockSize2});
@@ -289,8 +288,7 @@ TMatrix<T> TMatrix<T>::BlockProd(const TMatrix<T>& a, const TMatrix<T>& b, const
     size_t blockSize2 = std::get<1>(blockSizes);
     size_t blockSize3 = std::get<2>(blockSizes);
     size_t aBlockMatrixSize1 = (n +  blockSize1 - 1) / blockSize1;
-    size_t aBlockMatrixSize2;
-    size_t bBlockMatrixSize1 = aBlockMatrixSize2 = (m +  blockSize2 - 1) / blockSize2;
+    size_t aBlockMatrixSize2 = (m + blockSize2 - 1) / blockSize2;
     size_t bBlockMatrixSize2 = (l +  blockSize3 - 1) / blockSize3;
     auto aBlockMatrix = a.ConstructBlockMatrix({blockSize1, blockSize2});
     auto bBlockMatrix = a.ConstructBlockMatrix({blockSize2, blockSize3});
