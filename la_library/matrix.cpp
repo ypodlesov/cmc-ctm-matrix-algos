@@ -64,11 +64,6 @@ TMatrix<T>& TMatrix<T>::operator =(TMatrix&& other) noexcept {
 }
 
 template <typename T>
-T* TMatrix<T>::GetData() const noexcept {
-    return Data;
-}
-
-template <typename T>
 size_t TMatrix<T>::GetSize1() const noexcept {
     return Size1;
 }
@@ -144,22 +139,6 @@ TMatrix<T> TMatrix<T>::ConstructFromRange(size_t row1, size_t row2, size_t col1,
         }
     }
     return res;
-}
-
-template <typename T>
-void TMatrix<T>::AssignBlock(TMatrix<T>& matrixBlock, size_t row1, size_t row2, size_t col1, size_t col2) { // [row1,row2), [col1, col2)
-    for (size_t i = row1; i < row2; ++i) {
-        for (size_t j = col1; j < col2; ++j) {
-            Data[j * Size1 + i] = matrixBlock(i - row1, j - col1);
-        }
-    }
-}
-
-template <typename T>
-void TMatrix<T>::AssignColumn(size_t j, const TVector<T>& v) {
-    for (size_t i = 0; i < Size1; ++i) {
-        Data[j * Size1 + i] = v(i);
-    }
 }
 
 template <typename T>

@@ -49,11 +49,6 @@ TVector<T> TVector<T>::operator =(TVector&& other) noexcept {
 }
 
 template <typename T>
-T* TVector<T>::GetData() const noexcept {
-    return Data;
-}
-
-template <typename T>
 size_t TVector<T>::GetSize() const noexcept {
     return Size;
 }

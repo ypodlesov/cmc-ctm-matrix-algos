@@ -20,7 +20,6 @@ public:
     TMatrix& operator =(const TMatrix& other);
     TMatrix& operator =(TMatrix&& other) noexcept;
 
-    T* GetData() const noexcept;
     size_t GetSize1() const noexcept;
     size_t GetSize2() const noexcept;
 
@@ -35,10 +34,8 @@ public:
     void Nullify();
     TMatrix Transpose() const;
     TMatrix ConstructFromRange(size_t row1, size_t row2, size_t col1, size_t col2) const; // [row1,row2), [col1, col2)
-    void AssignBlock(TMatrix& matrixBlock, size_t row1, size_t row2, size_t col1, size_t col2); // [row1,row2), [col1, col2)
-    void AssignColumn(size_t columnIdx, const TVector<T>& v);
-    double ColumnNorm2(size_t colNum) const; // make member
-    double Norm2() const; // make member
+    double ColumnNorm2(size_t colNum) const;
+    double Norm2() const;
     TMatrix<TMatrix> ConstructBlockMatrix(const std::pair<size_t, size_t>& blockSize) const;
     T* GetColumn(const size_t j) const;
 

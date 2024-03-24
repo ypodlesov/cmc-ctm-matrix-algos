@@ -15,7 +15,6 @@ public:
     TVector operator =(const TVector& other);
     TVector operator =(TVector&& other) noexcept;
 
-    T* GetData() const noexcept;
     size_t GetSize() const noexcept;
 
     bool operator !() const noexcept;
