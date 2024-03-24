@@ -31,7 +31,6 @@ bool QRDecompositionBlockOptimized(TMatrix<double>& Q, TMatrix<double>& R) {
     }
     const size_t blockSize = 8;
     const size_t n = Q.Size1;
-    Q = std::move(Q);
     R = TMatrix<double>(n, n);
     R.Nullify();
     for (size_t j = 0; j < n; ++j) {

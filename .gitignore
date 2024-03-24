@@ -35,3 +35,5 @@
 build*
 *json*
 # *fortran*
+
+.cache
