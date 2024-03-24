@@ -1,5 +1,4 @@
 #pragma once
-
 #include <cmath>
 
 #define EPS 1e-9

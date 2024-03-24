@@ -1,5 +1,5 @@
 #include "qr_decomposition.h"
-#include "common.h"
+#include "helpers.h"
 
 bool QRDecomposition(TMatrix<double>& Q, TMatrix<double>& R) {
     if (Q.Size1 != Q.Size2) {

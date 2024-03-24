@@ -1,2 +1,7 @@
-add_catch(test_qr_decomposition test.cpp qr_decomposition.cpp matrix.cpp vector.cpp)
-add_catch(bench_qr_decomposition run.cpp qr_decomposition.cpp matrix.cpp vector.cpp)
+add_catch(test_qr_decomposition test.cpp qr_decomposition.cpp)
+target_include_directories(test_qr_decomposition PRIVATE ${LA_LIBRARY_PATH})
+target_link_libraries(test_qr_decomposition PRIVATE LA_LIBRARY)
+
+add_catch(bench_qr_decomposition run.cpp qr_decomposition.cpp)
+target_include_directories(bench_qr_decomposition PRIVATE ${LA_LIBRARY_PATH})
+target_link_libraries(bench_qr_decomposition PRIVATE LA_LIBRARY)
