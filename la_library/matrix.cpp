@@ -319,6 +319,49 @@ T TMatrix<T>::InnerProd(const TMatrix<T>& a, size_t a_column, const TMatrix<T>& 
 }
 
 template <typename T>
+TMatrix<T> TMatrix<T>::GenerateRandomTriangular(const size_t m, const size_t n, ETriangularType type) {
+    std::srand(std::time(nullptr));
+    TMatrix<T> result(m, n);
+    T* data = result.Data;
+    for (size_t j = 0; j < n; ++j) {
+        for (size_t i = 0; i <= j; ++i) {
+            data[m * j + i] = std::rand() % (m * n);
+        }
+    }
+    return result;
+}
+
+template <typename T>
+TMatrix<T> TMatrix<T>::GenerateRandomSymmetricDefinite(const size_t n, EDefiniteness definiteness) {
+    std::srand(std::time(nullptr));
+    TMatrix<T> result = GenerateRandomTriangular(n, n, ETriangularType::Upper);
+    T* data = result.Data;
+    for (size_t j = 0; j < n; ++j) {
+        for (size_t i = 0; i < n; ++i) {
+            if (i != j) {
+                data[j * n + i] = data[i * n + j];
+                continue;
+            }
+            switch (definiteness) {
+                case EDefiniteness::Negative: {
+                    data[n * i + i] = -std::fabs(std::rand()) - 1;
+                }
+                case EDefiniteness::Positive: {
+                    data[n * i + i] = std::fabs(std::rand()) + 1;
+                }
+                case EDefiniteness::NonNegative: {
+                    data[n * i + i] = std::fabs(std::rand());
+                }
+                case EDefiniteness::NonPositive: {
+                    data[n * i + i] = -std::fabs(std::rand());
+                }
+            }
+        }
+    }
+    return result;
+}
+
+template <typename T>
 TMatrix<T> TMatrix<T>::FromBlockMatrix(const TMatrix<TMatrix<T>>& a) {
     size_t n = 0, m = 0;
     for (size_t i = 0; i < a.GetSize1(); ++i) {

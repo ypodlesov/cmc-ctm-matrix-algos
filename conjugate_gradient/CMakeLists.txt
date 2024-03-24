@@ -1,0 +1,7 @@
+add_catch(test_conjugate_gradient test.cpp conjugate_gradient.cpp)
+target_include_directories(test_conjugate_gradient PRIVATE ${LA_LIBRARY_PATH})
+target_link_libraries(test_conjugate_gradient PRIVATE LA_LIBRARY)
+
+add_catch(bench_conjugate_gradient run.cpp conjugate_gradient.cpp)
+target_include_directories(bench_conjugate_gradient PRIVATE ${LA_LIBRARY_PATH})
+target_link_libraries(bench_conjugate_gradient PRIVATE LA_LIBRARY)

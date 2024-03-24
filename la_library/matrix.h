@@ -6,6 +6,13 @@ enum class ETriangularType {
     Lower
 };
 
+enum class EDefiniteness {
+    Positive,
+    Negative,
+    NonPositive,
+    NonNegative
+};
+
 template <typename T>
 class TVector;
 
@@ -48,6 +55,8 @@ public:
     static TMatrix CreateRandom(const size_t size1, const size_t size2);
     static T InnerProd(const TMatrix& a, size_t a_column, const TMatrix& b, size_t b_column);
     static TMatrix FromBlockMatrix(const TMatrix<TMatrix>& a);
+    static TMatrix GenerateRandomTriangular(const size_t m, const size_t n, ETriangularType type);
+    static TMatrix GenerateRandomSymmetricDefinite(const size_t n, EDefiniteness definiteness);
 
     friend bool QRDecomposition(TMatrix<double>& Q, TMatrix<double>& R);
     friend bool QRDecompositionBlockOptimized(TMatrix<double>& Q, TMatrix<double>& R);
