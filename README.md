@@ -12,17 +12,19 @@ Here you can also find use-examples of some instruments like **conan package man
 cmc-ctm-matrix-algos
 ├── CMakeLists.txt
 ├── .gitignore
-├── qr_decomposition
+├── la_library
 │   ├── CMakeLists.txt
-│   ├── common.h
+│   ├── helpers.h
 │   ├── matrix.cpp
 │   ├── matrix.h
+│   ├── vector.cpp
+│   └── vector.h
+├── qr_decomposition
+│   ├── CMakeLists.txt
 │   ├── qr_decomposition.cpp
 │   ├── qr_decomposition.h
 │   ├── run.cpp
-│   ├── test.cpp
-│   ├── vector.cpp
-│   └── vector.h
+│   └── test.cpp
 ├── README.md
 └── tools
     ├── catch_main.cpp
