@@ -114,8 +114,11 @@ TMatrix<T>::operator double() const {
 
 template <typename T>
 void TMatrix<T>::Nullify() {
+    if (!Data) {
+        return;
+    }
     for (size_t i = 0; i < Size1 * Size2; ++i) {
-        Data[i] = 0;
+        Data[i] = {};
     }
 }
 
@@ -216,78 +219,6 @@ TMatrix<T> TMatrix<T>::MMMultiply(const TMatrix<T>& a, const TMatrix<T>& b) {
 }
 
 template <typename T>
-TMatrix<T> TMatrix<T>::ParallelProd(const TMatrix& a, const TMatrix& b) {
-    if (!AbleToMultiply(a, b)) {
-        return TMatrix<T>();
-    }
-    size_t n = a.GetSize1();
-    size_t m = a.GetSize2();
-    size_t l = b.GetSize2();
-    size_t blockSize1 = std::max<size_t>(std::sqrt(n), 1 << 8);
-    size_t blockSize2 = std::max<size_t>(std::sqrt(m), 1 << 8);
-    size_t blockSize3 = std::max<size_t>(std::sqrt(l), 1 << 8);
-    size_t aBlockMatrixSize1 = (n +  blockSize1 - 1) / blockSize1;
-    size_t aBlockMatrixSize2 = (m + blockSize2 - 1) / blockSize2;
-    size_t bBlockMatrixSize2 = (l +  blockSize3 - 1) / blockSize3;
-
-    auto aBlockMatrix = a.ConstructBlockMatrix({blockSize1, blockSize2});
-    auto bBlockMatrix = a.ConstructBlockMatrix({blockSize2, blockSize3});
-
-    TMatrix<TMatrix<T>> cBlockMatrix(aBlockMatrixSize1, bBlockMatrixSize2);
-    for (size_t i = 0; i < aBlockMatrixSize1; ++i) {
-        for (size_t j = 0; j < bBlockMatrixSize2; ++j) {
-            std::vector<std::future<TMatrix<T>>> multResults;
-            for (size_t k = 0; k < aBlockMatrixSize2; ++k) {
-                // std::future<int> f2 = std::async(std::launch::async, []{ return 8; });
-                if (!cBlockMatrix(i, j)) {
-                    cBlockMatrix(i, j) = TMatrix<T>::MMMultiply(aBlockMatrix(i, k), bBlockMatrix(k, j));
-                } else {
-                    multResults.emplace_back(std::async(std::launch::async, TMatrix<T>::MMMultiply, std::ref(aBlockMatrix(i, k)), std::ref(bBlockMatrix(k, j))));
-                    // cBlockMatrix(i, j) += TMatrix<T>::MMMultiply(aBlockMatrix(i, k), bBlockMatrix(k, j));
-                }
-            }
-            for (auto&& multResult : multResults) {
-                cBlockMatrix(i, j) += multResult.get();
-            }
-        }
-    }
-    return TMatrix<T>::FromBlockMatrix(cBlockMatrix);
-}
-
-
-template <typename T>
-TMatrix<T> TMatrix<T>::BlockProd(const TMatrix<T>& a, const TMatrix<T>& b, const std::tuple<size_t, size_t, size_t>& blockSizes) {
-    if (!AbleToMultiply(a, b)) {
-        return TMatrix<T>();
-    }
-    size_t n = a.GetSize1();
-    size_t m = a.GetSize2();
-    size_t l = b.GetSize2();
-    size_t blockSize1 = std::get<0>(blockSizes);
-    size_t blockSize2 = std::get<1>(blockSizes);
-    size_t blockSize3 = std::get<2>(blockSizes);
-    size_t aBlockMatrixSize1 = (n +  blockSize1 - 1) / blockSize1;
-    size_t aBlockMatrixSize2 = (m + blockSize2 - 1) / blockSize2;
-    size_t bBlockMatrixSize2 = (l +  blockSize3 - 1) / blockSize3;
-    auto aBlockMatrix = a.ConstructBlockMatrix({blockSize1, blockSize2});
-    auto bBlockMatrix = a.ConstructBlockMatrix({blockSize2, blockSize3});
-    
-    TMatrix<TMatrix<T>> cBlockMatrix(aBlockMatrixSize1, bBlockMatrixSize2);
-    for (size_t i = 0; i < aBlockMatrixSize1; ++i) {
-        for (size_t j = 0; j < bBlockMatrixSize2; ++j) {
-            for (size_t k = 0; k < aBlockMatrixSize2; ++k) {
-                if (!cBlockMatrix(i, j)) {
-                    cBlockMatrix(i, j) = TMatrix<T>::MMMultiply(aBlockMatrix(i, k), bBlockMatrix(k, j));
-                } else {
-                    cBlockMatrix(i, j) += TMatrix<T>::MMMultiply(aBlockMatrix(i, k), bBlockMatrix(k, j));
-                }
-            }
-        }
-    }
-    return TMatrix<T>::FromBlockMatrix(cBlockMatrix);
-}
-
-template <typename T>
 TMatrix<T> TMatrix<T>::CreateIdentityMatrix(const size_t n) {
     TMatrix<T> I(n);
     I.Nullify();
@@ -359,6 +290,28 @@ TMatrix<T> TMatrix<T>::GenerateRandomSymmetricDefinite(const size_t n, EDefinite
         }
     }
     return result;
+}
+
+template <typename T>
+bool TMatrix<T>::MVMultiply(const TMatrix<T>& a, const TVector<T>& x, TVector<T>& result) {
+    if (!a || !x || a.Size2 != x.Size) {
+        return false;
+    }
+    if (!result || result.Size != a.Size1) {
+        result = TVector<T>(a.Size1);
+    }
+    result.Nullify();
+    T* aData = a.Data;
+    T* xData = x.Data;
+    T* resultData = result.Data;
+    for (size_t j = 0; j < a.Size2; ++j) {
+        size_t columnShift = j * a.Size1;
+        T xj = xData[j];
+        for (size_t i = 0; i < a.Size1; ++i) {
+            resultData[i] += aData[columnShift + i] * xj;
+        }
+    }
+    return true;
 }
 
 template <typename T>

@@ -12,10 +12,10 @@ static void Test(const uint32_t n) {
     auto Q = A;
     TMatrix<double> R;
     REQUIRE(QRDecomposition(Q, R));
-    TMatrix C(TMatrix<double>::Prod(Q, R));
+    TMatrix C(TMatrix<double>::MMMultiply(Q, R));
     REQUIRE(A == C);
     REQUIRE(TMatrix<double>::IsTriangular(R, ETriangularType::Upper));
-    REQUIRE(TMatrix<double>::Prod(Q, Q.Transpose()) == TMatrix<double>::CreateIdentityMatrix(n));
+    REQUIRE(TMatrix<double>::MMMultiply(Q, Q.Transpose()) == TMatrix<double>::CreateIdentityMatrix(n));
 }
 
 TEST_CASE("Size 10") {

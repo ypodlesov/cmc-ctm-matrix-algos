@@ -27,7 +27,7 @@ function(add_if_exists name)
   endif()
 endfunction()
 
-set(LA_LIBRARY_PATH ${CMAKE_SOURCE_DIR}/la_library)
+set(BASIC_LA_PATH ${CMAKE_SOURCE_DIR}/basic_la)
 add_if_exists(la_library)
 add_if_exists(qr_decomposition)
 add_if_exists(conjugate_gradient)

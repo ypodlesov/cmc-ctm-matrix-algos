@@ -49,17 +49,17 @@ public:
     static bool IsTriangular(const TMatrix& a, ETriangularType type);
     static bool AbleToMultiply(const TMatrix& a, const TMatrix& b);
     static TMatrix MMMultiply(const TMatrix& a, const TMatrix& b);
-    static TMatrix ParallelProd(const TMatrix& a, const TMatrix& b);
-    static TMatrix BlockProd(const TMatrix& a, const TMatrix& b, const std::tuple<size_t, size_t, size_t>& blockSizes);
     static TMatrix CreateIdentityMatrix(const size_t n);
     static TMatrix CreateRandom(const size_t size1, const size_t size2);
     static T InnerProd(const TMatrix& a, size_t a_column, const TMatrix& b, size_t b_column);
     static TMatrix FromBlockMatrix(const TMatrix<TMatrix>& a);
     static TMatrix GenerateRandomTriangular(const size_t m, const size_t n, ETriangularType type);
     static TMatrix GenerateRandomSymmetricDefinite(const size_t n, EDefiniteness definiteness);
+    static bool MVMultiply(const TMatrix& a, const TVector<T>& x, TVector<T>& result);
 
     friend bool QRDecomposition(TMatrix<double>& Q, TMatrix<double>& R);
     friend bool QRDecompositionBlockOptimized(TMatrix<double>& Q, TMatrix<double>& R);
+    friend bool ConjugateGradient(const TMatrix<double>& A, const TVector<double>& b, TVector<double>& x);
 
     friend class TVector<T>;
 
