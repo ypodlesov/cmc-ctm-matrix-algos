@@ -15,8 +15,7 @@ public:
     TVector operator =(const TVector& other);
     TVector operator =(TVector&& other) noexcept;
 
-    void Nullify();
-    size_t GetSize() const noexcept;
+    void Nullify() noexcept;
 
     bool operator !() const noexcept;
     T& operator ()(size_t i) const;
@@ -55,6 +54,9 @@ TVector<T> operator -(const TVector<T>& a, const TVector<T>& b);
 
 template <typename T1, typename T2>
 TVector<T1> operator *(const TVector<T1>& a, const T2 coeff);
+
+template <typename T1, typename T2>
+TVector<T1> operator *(const T2 coeff, const TVector<T1>& a);
 
 template <typename T>
 T InnerProd(const TVector<T>& a, const TVector<T>& b);

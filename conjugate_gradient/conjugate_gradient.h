@@ -1,3 +1,4 @@
 #include <matrix.h>
+#include <vector.h>
 
-bool ConjugateGradient(TMatrix<double>& Q, TMatrix<double>& R);
+bool ConjugateGradient(const TMatrix<double>& A, const TVector<double>& b, TVector<double>& x);

@@ -27,7 +27,7 @@ TVector<T>::TVector(TVector&& other) noexcept
 
 template <typename T>
 TVector<T>::TVector(const TMatrix<T>& a, size_t j) 
-    : Size{a.GetSize1()}
+    : Size{a.Size1}
     {
         Data = new T[Size];
         for (size_t i = 0; i < Size; ++i) {
@@ -49,8 +49,13 @@ TVector<T> TVector<T>::operator =(TVector&& other) noexcept {
 }
 
 template <typename T>
-size_t TVector<T>::GetSize() const noexcept {
-    return Size;
+void TVector<T>::Nullify() noexcept {
+    if (!Data) {
+        return;
+    }
+    for (size_t j = 0; j < Size; ++j) {
+        Data[j] = {};
+    }
 }
 
 template <typename T>
@@ -90,7 +95,7 @@ TVector<T>& TVector<T>::operator *=(const DType coeff) {
 template <typename T>
 double TVector<T>::Norm2(const TVector<T>& v) {
     double norm = 0;
-    size_t size = v.GetSize();
+    size_t size = v.Size;
     for (size_t i = 0; i < size; ++i) {
         norm += v(i) * v(i);
     }
@@ -100,7 +105,7 @@ double TVector<T>::Norm2(const TVector<T>& v) {
 template <typename T>
 double TVector<T>::InnerProd(const TVector<T>& v, const TVector<T>& u) {
     double res = 0.0;
-    for (size_t i = 0; i < v.GetSize(); ++i) {
+    for (size_t i = 0; i < v.Size; ++i) {
         res += v(i) * u(i);
     }
     return res;
@@ -115,7 +120,7 @@ TVector<T>::~TVector() {
 
 template <typename T>
 std::ostream& operator <<(std::ostream& out, const TVector<T>& v) {
-    size_t size = v.GetSize();
+    size_t size = v.Size;
     for (size_t i = 0; i < size; ++i) {
         out << v(i) << ' ';
     }
@@ -124,7 +129,7 @@ std::ostream& operator <<(std::ostream& out, const TVector<T>& v) {
 
 template <typename T>
 bool operator ==(const TVector<T>& a, const TVector<T>& b) {
-    size_t size = a.GetSize();
+    size_t size = a.Size;
     for (size_t i = 0; i < size; ++i) {
         if (!RoughEq(a(i), b(i))) {
             return false;
@@ -159,12 +164,16 @@ TVector<T1> operator *(const TVector<T1>& a, const T2 coeff) {
 template <typename T>
 T InnerProd(const TVector<T>& a, const TVector<T>& b) {
     T res{};
-    size_t size = a.GetSize();
+    size_t size = a.Size;
     for (size_t i = 0; i < size; ++i) {
         res += a[i] * b[i];
     }
 }
 
+template <typename T1, typename T2>
+TVector<T1> operator *(const T2 coeff, const TVector<T1>& a) {
+    return a * coeff;
+}
 
 template <> 
 double TVector<TMatrix<double>>::Norm2(const TVector<TMatrix<double>>& v) = delete;
